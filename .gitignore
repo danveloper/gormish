@@ -1,0 +1,9 @@
+*.lock
+*.class
+*.iml
+*.ipr
+*.iws
+build/*
+classes/*
+.gradle/*
+.idea/*

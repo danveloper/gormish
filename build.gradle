@@ -1,0 +1,15 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+
+repositories {
+	mavenCentral()
+    mavenRepo name: "Grails", url: "http://repo.grails.org/grails/repo/"
+}
+
+dependencies {
+	groovy 'org.codehaus.groovy:groovy-all:2.0.0'
+	compile 'org.grails:grails-core:2.1.0'
+	compile 'org.grails:grails-hibernate:2.1.0'
+    compile 'org.grails:grails-plugin-datasource:2.1.0'
+    compile 'org.slf4j:slf4j-api:1.6.2'
+}
