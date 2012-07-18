@@ -11,7 +11,7 @@ This application is a work of trickery... Essentially what this is doing is sett
 
 Notes
 ---
-I hate -- with a firey passion -- XML configuration files, so this application has an entirely annotation-driven Spring configuration. Additional configuration, like DataSource is consumed through Spring's ConfigSlurper and incorporated into the application context in the same way that Grails would natively do this.
+I hate -- with a firey passion -- XML configuration files, so this application has an entirely annotation-driven Spring configuration. Additional configuration, like DataSource is consumed through Groovy's ConfigSlurper and incorporated into the application context in the same way that Grails would natively do this.
 
 Hints
 ---
