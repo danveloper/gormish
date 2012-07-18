@@ -12,6 +12,10 @@ class Registrant {
     String firstName
     String lastName
 
+    static mapping = {
+        table name: "REG"
+    }
+
     static constraints = {
         firstName(nullable: false)
         lastName(nullable: false)

@@ -7,3 +7,4 @@ build/*
 classes/*
 .gradle/*
 .idea/*
+out/*

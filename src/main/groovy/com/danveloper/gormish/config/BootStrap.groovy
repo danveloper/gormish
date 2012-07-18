@@ -23,6 +23,8 @@ class BootStrap {
      * :)
      */
     static void init() {
+        Class cls = this.classLoader.loadClass("org.springframework.util.Log4jConfigurer")
+        invokeStaticMethod(cls, "initLogging", ["classpath:log4j.properties"].toArray(new Object[1]))
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.danveloper.gormish")
 
         Configuration.initializePlugins()
@@ -46,6 +48,30 @@ class BootStrap {
         def sessionFactory = (SessionFactory)applicationContext.getBean(GrailsRuntimeConfigurator.SESSION_FACTORY_BEAN)
         if (!TransactionSynchronizationManager.hasResource(sessionFactory)) {
             TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(sessionFactory.openSession()))
+        }
+    }
+
+    /**
+     * STOLEN FROM Grails project...
+     *
+     * Invokes the named method on a target object using reflection.
+     * The method signature is determined by the classes of each argument.
+     * @param target The object to call the method on.
+     * @param name The name of the method to call.
+     * @param args The arguments to pass to the method (may be an empty array).
+     * @return The value returned by the method.
+     */
+    private static Object invokeStaticMethod(Class target, String name, Object[] args) {
+        Class<?>[] argTypes = new Class[args.length];
+        for (int i = 0; i < args.length; i++) {
+            argTypes[i] = args[i].getClass();
+        }
+
+        try {
+            return target.getMethod(name, argTypes).invoke(target, args);
+        }
+        catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

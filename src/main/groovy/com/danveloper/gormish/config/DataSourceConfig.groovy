@@ -6,11 +6,12 @@ package com.danveloper.gormish.config
 
 dataSource {
     pooled = true
-    driverClassName = "org.h2.Driver"
-    username = "sa"
+    driverClassName = "com.mysql.jdbc.Driver"
+    dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+    username = "root"
     password = ""
     dbCreate = "create-drop"
-    url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+    url = "jdbc:mysql://localhost/gormish?useUnicode=yes&characterEncoding=UTF-8"
 }
 hibernate {
     cache.use_second_level_cache = true
