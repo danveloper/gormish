@@ -8,9 +8,13 @@ repositories {
 
 dependencies {
 	groovy 'org.codehaus.groovy:groovy-all:2.0.0'
-	compile 'org.grails:grails-core:2.1.0'
-	compile 'org.grails:grails-hibernate:2.1.0'
-    compile 'org.grails:grails-plugin-datasource:2.1.0'
-    compile 'org.grails:grails-plugin-domain-class:2.1.0'
-    compile 'org.slf4j:slf4j-api:1.6.4'
+
+    ['core', 'hibernate', 'plugin-datasource', 'plugin-domain-class'].each { plugin ->
+        compile "org.grails:grails-$plugin:2.1.0"
+    }
+}
+
+// Fat Jar Option (http://docs.codehaus.org/display/GRADLE/Cookbook#Cookbook-Creatingafatjar)
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }

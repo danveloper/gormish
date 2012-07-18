@@ -1,4 +1,8 @@
-package com.danveloper.gormish
+package com.danveloper.gormish.config
+
+/**
+ * http://grails.org/doc/latest/guide/conf.html#dataSource
+ */
 
 dataSource {
     pooled = true

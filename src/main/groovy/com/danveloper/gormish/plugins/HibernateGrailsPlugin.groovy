@@ -1,4 +1,4 @@
-package com.danveloper.gormish
+package com.danveloper.gormish.plugins
 
 import org.codehaus.groovy.grails.commons.AnnotationDomainClassArtefactHandler
 import org.codehaus.groovy.grails.plugins.orm.hibernate.HibernatePluginSupport
