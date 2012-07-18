@@ -5,6 +5,8 @@ dataSource {
     driverClassName = "org.h2.Driver"
     username = "sa"
     password = ""
+    dbCreate = "create-drop"
+    url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
 }
 hibernate {
     cache.use_second_level_cache = true

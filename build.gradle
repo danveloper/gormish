@@ -11,5 +11,6 @@ dependencies {
 	compile 'org.grails:grails-core:2.1.0'
 	compile 'org.grails:grails-hibernate:2.1.0'
     compile 'org.grails:grails-plugin-datasource:2.1.0'
-    compile 'org.slf4j:slf4j-api:1.6.2'
+    compile 'org.grails:grails-plugin-domain-class:2.1.0'
+    compile 'org.slf4j:slf4j-api:1.6.4'
 }

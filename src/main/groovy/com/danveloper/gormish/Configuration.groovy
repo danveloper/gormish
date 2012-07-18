@@ -17,6 +17,13 @@ import org.codehaus.groovy.grails.plugins.PluginManagerHolder
 
 @org.springframework.context.annotation.Configuration
 class Configuration {
+    static def domainClasses = [
+            'com.danveloper.gormish.model.Registrant'
+    ]
+    static def plugins = [
+            'org.codehaus.groovy.grails.plugins.DomainClassGrailsPlugin',
+            'com.danveloper.gormish.HibernateGrailsPlugin'
+    ]
     @Bean
     public GrailsResourceLoader grailsResourceLoader() {
         def a = new GrailsResourceLoaderFactoryBean()
@@ -33,6 +40,8 @@ class Configuration {
             object
         }
 
+        grailsApplication.@loadedClasses = domainClasses.collect { domainClass -> grailsApplication.classLoader.loadClass(domainClass) }
+
         // Setup the datasource
         def datasourceConfig = new ConfigSlurper().parse(grailsApplication.classLoader.loadClass("com.danveloper.gormish.Datasource"))
         grailsApplication.config.merge(datasourceConfig)
@@ -44,10 +53,12 @@ class Configuration {
     public GrailsPluginManager pluginManager() {
         def grailsApplication = ApplicationHolder.application
 
-        def hibernatePlugin = grailsApplication.classLoader.loadClass("com.danveloper.gormish.HibernateGrailsPlugin")
-        def plugins = [hibernatePlugin]
+        def hibernatePlugin = ("com.danveloper.gormish.HibernateGrailsPlugin")
 
-        def pluginManager = new DefaultGrailsPluginManager(plugins.toArray(new Class[plugins.size()]), grailsApplication)
+        def loadedPluginClasses = plugins.collect { plugin -> grailsApplication.classLoader.loadClass(plugin)}
+
+        def pluginManager = new DefaultGrailsPluginManager(loadedPluginClasses.toArray(new Class[loadedPluginClasses.size()]), grailsApplication)
+
         PluginManagerHolder.pluginManager = pluginManager
         pluginManager.loadPlugins()
         pluginManager.application = grailsApplication
