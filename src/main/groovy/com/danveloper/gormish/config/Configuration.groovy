@@ -21,11 +21,11 @@ import org.codehaus.groovy.grails.plugins.PluginManagerHolder
 @org.springframework.context.annotation.Configuration
 class Configuration {
     /**
-     * Define domain classes in this static list
+     * This is the exact equivalent of a grails-app's conf/DataSource.groovy...
+     * I've named it DataSourceConfig to exemplify that, in this case, the naming convention is arbitrary & configurable
      */
-    static def domainClasses = [
-            'com.danveloper.gormish.model.Registrant'
-    ]
+    static def dataSourceConfig = "com.danveloper.gormish.config.DataSourceConfig"
+
     /**
      * DomainClassGrailsPlugin & HibernateGrailsPlugin must be available in order for GORM to work...
      *
@@ -37,11 +37,6 @@ class Configuration {
             'com.danveloper.gormish.plugins.HibernateGrailsPlugin'
     ]
 
-    /**
-     * This is the exact equivalent of a grails-app's conf/DataSource.groovy...
-     * I've named it DataSourceConfig to exemplify that, in this case, the naming convention is arbitrary & configurable
-     */
-    static def dataSourceConfig = "com.danveloper.gormish.config.DataSourceConfig"
     @Bean
     public GrailsResourceLoader grailsResourceLoader() {
         def a = new GrailsResourceLoaderFactoryBean()
@@ -58,11 +53,11 @@ class Configuration {
             object
         }
 
-        grailsApplication.@loadedClasses = domainClasses.collect { domainClass -> grailsApplication.classLoader.loadClass(domainClass) }
-
-        // Setup the datasource
+        // Setup the datasource config
         def datasourceConfig = new ConfigSlurper().parse(grailsApplication.classLoader.loadClass(dataSourceConfig))
         grailsApplication.config.merge(datasourceConfig)
+
+        grailsApplication.@loadedClasses = grailsApplication.config.domainClasses.collect { domainClass -> grailsApplication.classLoader.loadClass(domainClass) }
 
         grailsApplication
     }
