@@ -1,6 +1,8 @@
 Using GORM outside of Grails (Grails v2.1.0)
 ===
 
+[![Build Status](https://secure.travis-ci.org/dan-woods/gormish.png?branch=master)](http://travis-ci.org/dan-woods/gormish)
+
 Synopsis
 ---
 GORM is almost certainly the greatest feature of Grails. I often find myself cursing the Hibernate Gods when I have to switch between Grails and Java. This example project was inspired because I wanted to use the GORM features in a simple Groovy standalone application. Dependency management for this application is handled by Gradle, and the Grails-related features are built on Grails v2.1.0 dependencies.
