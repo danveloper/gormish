@@ -54,8 +54,31 @@ class Configuration {
         }
 
         // Setup the datasource config
-        def datasourceConfig = new ConfigSlurper().parse(grailsApplication.classLoader.loadClass(dataSourceConfig))
+        def configSlurper = new ConfigSlurper()
+        def datasourceConfig = configSlurper.parse(grailsApplication.classLoader.loadClass(dataSourceConfig))
         grailsApplication.config.merge(datasourceConfig)
+
+        // Load external configuration files
+        def extfiles = System.getProperty("config.file")?.split(",")
+        def props = new Properties()
+        if (extfiles) {
+            extfiles.each { file ->
+                // Load from classpath if we were told to
+                if (file.startsWith("classpath:")) {
+                    def m = file =~ /^classpath:([a-zA-Z0-9-._]+)/;
+                    Configuration.classLoader.getResourceAsStream(m[0][1]).withReader { r ->
+                        props.load(r)
+                    }
+                } else {
+                    new File(file).withReader { r ->
+                        props.load(r)
+                    }
+                }
+                def externalConfig = configSlurper.parse(props)
+                externalConfig.domainClasses = externalConfig.domainClasses.split(",")
+                grailsApplication.config.merge(externalConfig)
+            }
+        }
 
         grailsApplication.@loadedClasses = grailsApplication.config.domainClasses.collect { domainClass -> grailsApplication.classLoader.loadClass(domainClass) }
 
