@@ -21,6 +21,7 @@ com.danveloper.gormish.Gormish is the runnable "test" class (for these purposes,
 
 License
 ---
-Free-for-all. Contact me if you need help: g(daniel.p.woods@gmail.com) && t(@danveloper)
+Free-for-all. Unless you're going to use it to spy on people. Then you can't use it. 
+Contact me if you need help: g(daniel.p.woods@gmail.com) && t(@danveloper)
 
 dan woods 2012.
